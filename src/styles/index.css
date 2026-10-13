@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+
+/*
+ * Tokens from design-system/eastco-hire-manager/MASTER.md. Components use the
+ * semantic names (bg-surface, text-muted, bg-primary…), never raw hex.
+ */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+
+  --color-bg: #faf7f1;
+  --color-surface: #ffffff;
+  --color-sunken: #f1ebe0;
+  --color-ink: #1c2725;
+  --color-muted: #5b6663;
+  --color-line: #e4ddd0;
+  --color-control: #8a7d6b;
+
+  --color-primary: #2b7a78;
+  --color-primary-deep: #0f4c51;
+  --color-primary-ink: #08302f;
+  --color-aqua: #8cc7c0;
+  --color-mist: #dcefeb;
+  --color-gold: #c49a5b;
+  --color-gold-soft: #e6cfa6;
+  --color-gold-deep: #7f5d2a;
+
+  --color-ok: #1f7a4d;
+  --color-ok-tint: #e6f4ec;
+  --color-warn: #8a5a00;
+  --color-warn-tint: #fbf0d9;
+  --color-bad: #b42318;
+  --color-bad-tint: #fdecea;
+  --color-info: #0f4c51;
+  --color-info-tint: #dcefeb;
+  --color-neutral: #4a5553;
+  --color-neutral-tint: #eceae4;
+
+  /* Chart series — validated with the dataviz palette checker on white (all six checks pass). */
+  --color-series-pta: #008f88;
+  --color-series-kdp: #b3681c;
+
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-sheet: 14px;
+
+  --shadow-raise: 0 1px 2px rgb(28 39 37 / 0.06), 0 4px 12px rgb(28 39 37 / 0.06);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (max-width: 767px) {
+    body {
+      font-size: 16px;
+    }
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  button,
+  [role='button'],
+  a,
+  summary,
+  label[for],
+  select {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+  dialog::backdrop {
+    background: rgb(8 48 47 / 0.45);
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility code {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+@utility pb-safe {
+  padding-bottom: max(env(safe-area-inset-bottom), 0px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------- printed documents */
+
+.doc-page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  background: #fff;
+  color: var(--color-ink);
+  font-size: 9.5pt;
+  line-height: 1.45;
+  box-shadow: var(--shadow-raise);
+}
+
+@media (max-width: 860px) {
+  .doc-page {
+    width: 100%;
+    min-height: 0;
+    padding: 20px 16px;
+    font-size: 13px;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  body {
+    background: #fff;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .doc-page {
+    box-shadow: none;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm;
+    font-size: 9.5pt;
+  }
+  .print-root {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+.animate-rise {
+  animation: rise 200ms ease-out both;
+}
+@keyframes flash {
+  from {
+    background: var(--color-mist);
+  }
+}
+.animate-flash {
+  animation: flash 900ms ease-out;
+}
