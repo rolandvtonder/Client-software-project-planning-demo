@@ -6,7 +6,7 @@ import {availability, freeByDay} from '../domain/availability';
 import {addDays, eachDay, fromISO, today} from '../domain/dates';
 import {formatRand} from '../domain/money';
 import type {BranchId, CollectionId, Item} from '../domain/types';
-import {COLLECTIONS, collectionLabel} from '../data/catalogue';
+import {COLLECTIONS, collectionLabel, photoUrl} from '../data/catalogue';
 import {BRANCHES} from '../data/selectors';
 import {actions, useStore} from '../data/store';
 import {cx} from '../lib/cx';
@@ -76,7 +76,8 @@ export function Equipment() {
                 return (
                   <tr key={i.id} className="h-12 cursor-pointer hover:bg-sunken/50" onClick={() => setParams({item: i.id})}>
                     <td className="py-2 pl-5 max-md:pl-4">
-                      <button className="text-left" onClick={(e) => (e.stopPropagation(), setParams({item: i.id}))}>
+                      <button className="flex items-center gap-3 text-left" onClick={(e) => (e.stopPropagation(), setParams({item: i.id}))}>
+                        <img src={photoUrl(i)} alt="" loading="lazy" className="size-10 shrink-0 rounded-[var(--radius-control)] bg-white object-contain" />
                         <span className="code mr-2 text-[13px] text-primary-deep">{i.code}</span>
                         <span className="font-medium">{i.name}</span>
                         {oos > 0 && (
@@ -141,7 +142,7 @@ function ItemDialog({item, branch: initial, onClose}: {item: Item; branch: Branc
       }
     >
       <div className="grid grid-cols-[160px_1fr] gap-5 max-md:grid-cols-1">
-        <img src={COLLECTIONS.find((c) => c.id === item.collection)!.cover} alt="" className="h-40 w-full rounded-[var(--radius-card)] object-cover" />
+        <img src={photoUrl(item)} alt={item.name} className="h-40 w-full rounded-[var(--radius-card)] bg-white object-contain" />
         <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-[14px]">
           <dt className="text-muted">Collection</dt>
           <dd>

@@ -7,6 +7,11 @@
 
 import {rand} from '../domain/money';
 import type {CollectionId, Item} from '../domain/types';
+import photos from './photos.json';
+
+const withPhoto = new Set<string>(photos);
+/** The item's photo, cut from Eastco's catalogue PDFs; falls back to its collection's cover. */
+export const photoUrl = (i: Item) => (withPhoto.has(i.id) ? `items/${i.id}.webp` : COLLECTIONS.find((c) => c.id === i.collection)!.cover);
 
 export const COLLECTIONS: {id: CollectionId; label: string; cover: string}[] = [
   {id: 'furniture', label: 'Furniture', cover: 'covers/furniture-cover.webp'},

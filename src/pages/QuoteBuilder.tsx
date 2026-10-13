@@ -23,7 +23,7 @@ import {isQuote} from '../domain/lifecycle';
 import {formatRand, rand} from '../domain/money';
 import {lineTotal, suggestedDeposit, totals} from '../domain/totals';
 import type {BranchId, CollectionId, Item, Job, Line} from '../domain/types';
-import {COLLECTIONS, collectionLabel} from '../data/catalogue';
+import {COLLECTIONS, collectionLabel, photoUrl} from '../data/catalogue';
 import {BRANCHES, clientLabel} from '../data/selectors';
 import {actions, currentUser, getState, newId, useStore} from '../data/store';
 import {cx} from '../lib/cx';
@@ -679,6 +679,7 @@ function ItemSearch({items, job, jobs, onAdd}: {items: Item[]; job: Job; jobs: J
                   onMouseEnter={() => setActive(k)}
                   className={cx('flex w-full items-center gap-3 rounded-[var(--radius-control)] px-3 py-2 text-left', k === active && 'bg-mist/70')}
                 >
+                  <img src={photoUrl(i)} alt="" loading="lazy" className="size-11 shrink-0 rounded-[var(--radius-control)] bg-white object-contain" />
                   <span className="code w-16 shrink-0 text-[13px] text-primary-deep">{i.code}</span>
                   <span className="min-w-0 flex-1">
                     <span className="block truncate font-medium">{i.name}</span>
@@ -751,6 +752,7 @@ function BrowseDialog({open, onClose, items, job, jobs, onAdd}: {open: boolean; 
           const c = checkLine(i, Math.max(1, qty[i.id] ?? 0), job.branch, job.outDate, job.backDate, jobs, {excludeJobId: job.id});
           return (
             <li key={i.id} className="flex items-center gap-3 py-2.5 max-md:flex-wrap">
+              <img src={photoUrl(i)} alt="" loading="lazy" className="size-14 shrink-0 rounded-[var(--radius-control)] bg-white object-contain" />
               <span className="code w-16 shrink-0 text-[13px] text-primary-deep">{i.code}</span>
               <span className="min-w-0 flex-1">
                 <span className="block font-medium">{i.name}</span>
