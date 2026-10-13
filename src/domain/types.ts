@@ -125,6 +125,8 @@ export type Job = {
   driver?: string;
   notes?: string;
   payments: Payment[];
+  /** The client's online acceptance of the quote (name, tick, signature). */
+  acceptance?: Signature;
   deliveryNote?: DeliveryNote;
   returnNote?: ReturnNote;
   charges: Charge[];

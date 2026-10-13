@@ -4,6 +4,7 @@ import {
   CheckIcon,
   ClipboardTextIcon,
   CopyIcon,
+  DeviceMobileIcon,
   FileTextIcon,
   HandCoinsIcon,
   PackageIcon,
@@ -188,9 +189,16 @@ export function JobDetail() {
               <p className="text-[14px]">
                 <span className="font-semibold">Next step:</span> {next.help}
               </p>
-              <Button variant="primary" size="lg" icon={next.icon} onClick={next.run} className="max-md:w-full">
-                {next.label}
-              </Button>
+              <div className="flex flex-wrap items-center gap-2 max-md:w-full">
+                {job.status === 'quote_sent' && (
+                  <LinkButton to={`/q/${job.id}`} size="lg" icon={DeviceMobileIcon} className="max-md:w-full">
+                    Open client’s view
+                  </LinkButton>
+                )}
+                <Button variant="primary" size="lg" icon={next.icon} onClick={next.run} className="max-md:w-full">
+                  {next.label}
+                </Button>
+              </div>
             </div>
           ) : (
             <p className="flex items-center gap-2 rounded-[var(--radius-card)] bg-ok-tint px-4 py-3 text-[14px] text-ok">
@@ -272,6 +280,7 @@ export function JobDetail() {
             <CardHeader title="Documents" sub="Open, print, or save as PDF" />
             <div className="grid grid-cols-3 gap-3 p-5 max-md:grid-cols-2 max-md:p-4">
               <DocLink to={`/doc/quote/${job.id}`} icon={FileTextIcon} label="Quote" sub={job.quoteNo} />
+              <DocLink to={`/q/${job.id}`} icon={DeviceMobileIcon} label="Client’s quote page" sub={job.acceptance ? `Signed by ${job.acceptance.signedBy}` : 'What the client sees'} disabled={job.status === 'draft'} />
               <DocLink to={`/doc/invoice/${job.id}`} icon={ReceiptIcon} label={settings.vatRegistered ? 'Tax invoice' : 'Invoice'} sub={job.invoiceNo ?? 'Issued on deposit'} disabled={!job.invoiceNo} />
               <DocLink to={`/doc/picking/${job.id}`} icon={ClipboardTextIcon} label="Picking list" sub="No prices" disabled={quote} />
               <DocLink to={`/doc/delivery/${job.id}`} icon={TruckIcon} label="Delivery note" sub={job.deliveryNote ? `${job.deliveryNote.number} · signed` : 'Not signed yet'} disabled={quote} />

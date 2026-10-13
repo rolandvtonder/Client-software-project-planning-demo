@@ -1,6 +1,7 @@
 import {
   ArrowCounterClockwiseIcon,
   CalendarBlankIcon,
+  CompassIcon,
   ChartBarIcon,
   ClipboardTextIcon,
   DotsThreeOutlineIcon,
@@ -24,6 +25,7 @@ import {DEMO_USERS} from '../data/seed';
 import {cx} from '../lib/cx';
 import {isQuote} from '../domain/lifecycle';
 import {SearchDialog} from './SearchDialog';
+import {openTourIntro} from './Tour';
 
 type NavItem = {to: string; label: string; icon: Icon; end?: boolean};
 
@@ -67,6 +69,9 @@ export function DemoRibbon() {
           <option value="driver">{DEMO_USERS.driver} — phone</option>
         </select>
       </label>
+      <button className="inline-flex items-center gap-1 font-semibold underline underline-offset-2" onClick={openTourIntro}>
+        <CompassIcon size={14} weight="bold" aria-hidden /> Tour
+      </button>
       <button className="inline-flex items-center gap-1 font-semibold underline underline-offset-2" onClick={() => setConfirm(true)}>
         <ArrowCounterClockwiseIcon size={14} weight="bold" aria-hidden /> Reset demo
       </button>

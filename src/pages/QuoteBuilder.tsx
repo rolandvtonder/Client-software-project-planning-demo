@@ -28,6 +28,7 @@ import {BRANCHES, clientLabel} from '../data/selectors';
 import {actions, currentUser, getState, newId, useStore} from '../data/store';
 import {cx} from '../lib/cx';
 import {ClientForm} from './Clients';
+import {tour} from '../layout/Tour';
 
 const EVENT_TYPES: Job['eventType'][] = ['Wedding', 'Birthday', 'Baby shower', 'Corporate', 'Conference', 'Private dinner', 'Other'];
 
@@ -70,6 +71,28 @@ export function QuoteBuilder() {
   const [job, setJob] = useState<Job>(() => {
     if (existing) return existing;
     const j = blankJob(branch === 'all' ? 'pta' : branch);
+    if (params.get('tour') === '1') {
+      // A wedding on the same day as a big confirmed wedding, so the stock check has something to say.
+      const busy = jobs.find((x) => x.clientId === 'c-sarah' && x.status === 'confirmed') ?? jobs.find((x) => x.status === 'confirmed' && x.branch === 'pta');
+      const event = busy?.eventDate ?? j.eventDate;
+      const item = (code: string) => items.find((i) => i.code === code)!;
+      const line = (code: string, qty: number) => ({itemId: item(code).id, qty, unitPrice: item(code).price, discountPct: 0});
+      const bloom = clients.find((x) => x.id === 'c-bloom');
+      return {
+        ...j,
+        clientId: bloom?.id ?? '',
+        branch: 'pta',
+        eventName: 'Khumalo engagement',
+        eventType: 'Wedding',
+        eventDate: event,
+        outDate: addDays(event, -1),
+        backDate: addDays(event, 1),
+        venue: 'Rustic Gem Venue, Hennops River Road, Centurion',
+        // chairs are short, napkins are on hold for another quote, the rest are fine
+        lines: [line('CHA10', 30), line('TAB45', 2), line('NAP79', 30), line('CAN79', 6)],
+        setupFee: rand(900),
+      };
+    }
     const c = clients.find((x) => x.id === params.get('client'));
     return c ? {...j, clientId: c.id, branch: c.branch, venue: c.addresses[0]?.line ?? ''} : j;
   });
@@ -527,6 +550,7 @@ export function QuoteBuilder() {
             return;
           }
           const s = persist(`Quote sent by ${channel} to ${client?.name}`, {status: 'quote_sent'});
+          tour.rememberJob(s.id);
           toast(`${s.quoteNo} sent by ${channel} (demo — nothing was really sent)`);
           navigate(`/jobs/${s.id}`);
         }}

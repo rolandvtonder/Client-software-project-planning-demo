@@ -8,9 +8,11 @@ Everything runs in the browser: the clients are made up, the 125 equipment items
 
 ## Try this (about 5 minutes)
 
+The demo opens with a **guided tour** that walks through these steps; it can be restarted from **Tour** in the gold bar.
+
 1. **Dashboard:** today's delivery and collection, plus what needs attention.
 2. **New quote:** pick *Bloom & Bough Events* and set the event date to the *Van der Merwe wedding* date (10 days from now). Type `30 CHA10` and press Enter. Only 10 chairs are free, so press **borrow 20** to take them from Krugersdorp. Send the quote.
-3. On the order, press **Client accepted**, then **Record deposit**. The booking is confirmed and the tax invoice is issued.
+3. Open **Client’s view** to see the quote page the client gets on WhatsApp, and accept and sign it with a finger. Back on the order, press **Record deposit**. The booking is confirmed and the tax invoice is issued.
 4. **View as → Sipho (Driver)** in the ribbon, on a phone or in a narrow window. Open *Nomsa's baby shower*, count with the client, sign with a finger, and the delivery note is done.
 5. Open *Quarterly strategy day* (coming back today) and run the **collection check**: mark something damaged, then settle the deposit on the order page.
 6. **Reports:** orders for the month, with a CSV download for Excel.

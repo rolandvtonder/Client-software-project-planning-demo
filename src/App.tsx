@@ -2,6 +2,8 @@ import {lazy, Suspense} from 'react';
 import {createHashRouter, Outlet, RouterProvider} from 'react-router-dom';
 import {Toaster} from './components/ui';
 import {AppShell} from './layout/AppShell';
+import {TourBar, TourIntro} from './layout/Tour';
+import {ClientQuote} from './pages/ClientQuote';
 import {Calendar} from './pages/Calendar';
 import {ClientDetail, Clients} from './pages/Clients';
 import {Dashboard} from './pages/Dashboard';
@@ -21,7 +23,20 @@ import {SettingsPage} from './pages/Settings';
 const Reports = lazy(() => import('./pages/Reports').then((m) => ({default: m.Reports})));
 
 // Hash routing: works on any static host (GitHub Pages included) with no rewrites.
+function Root() {
+  return (
+    <>
+      <Outlet />
+      <TourBar />
+      <TourIntro />
+    </>
+  );
+}
+
 const router = createHashRouter([
+  {
+    element: <Root />,
+    children: [
   {
     element: (
       <AppShell>
@@ -48,6 +63,9 @@ const router = createHashRouter([
   {path: '/doc/:kind/:id', element: <DocumentView />},
   {path: '/driver', element: <DriverToday />},
   {path: '/driver/:id', element: <DriverJob />},
+  {path: '/q/:id', element: <ClientQuote />},
+    ],
+  },
 ]);
 
 export function App() {
